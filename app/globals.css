@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0f;
+  --foreground: #00ffff;
+  --neon-cyan: #00ffff;
+  --neon-purple: #b026ff;
+  --neon-green: #00ff88;
+  --neon-pink: #ff00ff;
+  --dark-bg: #0a0a0f;
+  --card-bg: #0f0f1a;
 }
 
 @theme inline {
@@ -12,15 +18,255 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="6" fill="none" stroke="%2300ffff" stroke-width="2" opacity="0.8"/><circle cx="16" cy="16" r="2" fill="%2300ffff"/><line x1="16" y1="4" x2="16" y2="12" stroke="%2300ffff" stroke-width="2"/><line x1="16" y1="20" x2="16" y2="28" stroke="%2300ffff" stroke-width="2"/><line x1="4" y1="16" x2="12" y2="16" stroke="%2300ffff" stroke-width="2"/><line x1="20" y1="16" x2="28" y2="16" stroke="%2300ffff" stroke-width="2"/></svg>') 16 16, auto;
+}
+
+/* Custom cursor for interactive elements */
+a,
+button,
+.cursor-pointer {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="8" fill="none" stroke="%23ff00ff" stroke-width="2" opacity="0.9"/><circle cx="16" cy="16" r="3" fill="%23ff00ff"/><line x1="16" y1="2" x2="16" y2="10" stroke="%23ff00ff" stroke-width="2"/><line x1="16" y1="22" x2="16" y2="30" stroke="%23ff00ff" stroke-width="2"/><line x1="2" y1="16" x2="10" y2="16" stroke="%23ff00ff" stroke-width="2"/><line x1="22" y1="16" x2="30" y2="16" stroke="%23ff00ff" stroke-width="2"/></svg>') 16 16, pointer;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+/* Animated background grid */
+@keyframes grid-move {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(50px, 50px);
+  }
+}
+
+.grid-background {
+  background-image:
+    linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: grid-move 20s linear infinite;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Neon glow effects */
+.neon-glow {
+  text-shadow:
+    0 0 10px currentColor,
+    0 0 20px currentColor,
+    0 0 30px currentColor,
+    0 0 40px currentColor;
+}
+
+.neon-border {
+  border: 2px solid;
+  box-shadow:
+    0 0 10px currentColor,
+    0 0 20px currentColor,
+    inset 0 0 10px currentColor;
+}
+
+/* Glitch effect */
+@keyframes glitch {
+
+  0%,
+  100% {
+    text-shadow:
+      2px 2px 0 #00ffff,
+      -2px -2px 0 #ff00ff;
+  }
+
+  25% {
+    text-shadow:
+      -2px 2px 0 #00ffff,
+      2px -2px 0 #ff00ff;
+  }
+
+  50% {
+    text-shadow:
+      2px -2px 0 #00ffff,
+      -2px 2px 0 #ff00ff;
+  }
+
+  75% {
+    text-shadow:
+      -2px -2px 0 #00ffff,
+      2px 2px 0 #ff00ff;
+  }
+}
+
+.glitch-text {
+  animation: glitch 3s infinite;
+}
+
+/* Pulse animation */
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
+  }
+
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 30px currentColor, 0 0 60px currentColor;
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Scan line effect */
+@keyframes scan {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+.scan-line {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to bottom, transparent, rgba(0, 255, 255, 0.5), transparent);
+  animation: scan 8s linear infinite;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* Holographic card effect */
+@keyframes hologram {
+
+  0%,
+  100% {
+    opacity: 1;
+    filter: hue-rotate(0deg);
+  }
+
+  50% {
+    opacity: 0.9;
+    filter: hue-rotate(90deg);
+  }
+}
+
+.hologram-card {
+  animation: hologram 4s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.hologram-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg,
+      transparent,
+      rgba(0, 255, 255, 0.1),
+      transparent);
+  animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Floating animation */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Circuit pattern */
+.circuit-pattern {
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(176, 38, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(0, 255, 136, 0.1) 0%, transparent 50%);
+  background-size: 100% 100%;
+}
+
+/* Typewriter effect */
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+.typewriter {
+  overflow: hidden;
+  border-right: 3px solid #00ffff;
+  white-space: nowrap;
+  animation: typewriter 3s steps(40) 1s forwards, blink 0.75s step-end infinite;
+}
+
+@keyframes blink {
+
+  from,
+  to {
+    border-color: transparent;
+  }
+
+  50% {
+    border-color: #00ffff;
+  }
+}
+
+/* Slow spin animation for profile photo */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
 }
